@@ -58,7 +58,7 @@
     </header>
 
     <!-- スマホ用検索バー（トグル表示） -->
-    <div id="mobile-search" class="md:hidden fixed top-16 left-0 right-0 z-40 bg-white border-b px-4 py-3 hidden">
+    <div id="mobile-search" class="md:hidden fixed left-0 right-0 z-40 bg-white border-b px-4 py-3 hidden">
         <form role="search" method="get" action="<?php echo home_url('/'); ?>" class="relative flex">
             <input type="search" name="s" placeholder="検索" 
                    class="pr-12 bg-gray-50 border-gray-200 w-full px-3 py-2 border rounded-md"

@@ -1,4 +1,20 @@
 <script>
+        // ヘッダーの高さに合わせて検索バーのtop位置をセット
+        function adjustMobileSearchTop() {
+            var header = document.querySelector('header');
+            var search = document.getElementById('mobile-search');
+            if (header && search) {
+                var headerHeight = header.offsetHeight; // パディング・ボーダー含む高さ
+                console.log('headerHeight:', headerHeight);
+                search.style.top = headerHeight + 'px';
+            }
+        }
+
+        // ウィンドウサイズ変更時にも高さ調整
+        window.addEventListener('resize', adjustMobileSearchTop);
+        // ページ読み込み時にも高さ調整
+        window.addEventListener('DOMContentLoaded', adjustMobileSearchTop);
+        
         // モバイル検索トグル
         document.getElementById('mobile-search-toggle').addEventListener('click', function() {
             const searchBar = document.getElementById('mobile-search');
