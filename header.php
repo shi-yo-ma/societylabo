@@ -74,29 +74,32 @@
     <!-- プロフィールモーダル -->
     <div id="profile-modal" class="fixed inset-0 z-50 hidden">
         <div class="fixed inset-0 bg-black bg-opacity-50" id="profile-backdrop"></div>
-        <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-screen overflow-y-auto">
             <h3 class="text-lg font-semibold mb-4">編集長プロフィール</h3>
             <div class="space-y-4">
                 <div class="flex items-center space-x-4">
-                    <div class="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center">
-                        <svg class="h-8 w-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-lg">田中 太郎</h4>
-                        <p class="text-sm text-gray-600">編集長</p>
-                    </div>
+                <div class="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center">
+                    <svg class="h-8 w-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg">田中 太郎</h4>
+                    <p class="text-sm text-gray-600">編集長</p>
+                </div>
                 </div>
                 <p class="text-sm text-gray-700">
-                    フットサル歴15年、元日本代表選手。現在はソサイチLABOの編集長として、
-                    フットサルの普及と技術向上に貢献しています。
+                フットサル歴15年、元日本代表選手。現在はソサイチLABOの編集長として、
+                フットサルの普及と技術向上に貢献しています。
                 </p>
                 <div class="text-sm text-gray-600">
-                    <p><strong>経歴:</strong> 日本フットサル連盟認定指導者</p>
-                    <p><strong>専門:</strong> タクティクス、チーム戦術</p>
+                <p><strong>経歴:</strong> 日本フットサル連盟認定指導者</p>
+                <p><strong>専門:</strong> タクティクス、チーム戦術</p>
                 </div>
             </div>
             <button id="profile-close" class="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">閉じる</button>
+            </div>
         </div>
-    </div>
+        </div>
