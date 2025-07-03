@@ -73,8 +73,7 @@
 
     <!-- プロフィールモーダル -->
     <div id="profile-modal" class="fixed inset-0 z-50 hidden">
-        <div class="fixed inset-0 bg-black bg-opacity-50" id="profile-backdrop"></div>
-        <div class="fixed inset-0 flex items-center justify-center p-4">
+        <div id="profile-backdrop" class="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
             <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-screen overflow-y-auto">
             <h3 class="text-lg font-semibold mb-4">編集長プロフィール</h3>
             <div class="space-y-4">
@@ -102,4 +101,4 @@
             <button id="profile-close" class="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">閉じる</button>
             </div>
         </div>
-        </div>
+    </div>
