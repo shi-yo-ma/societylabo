@@ -5,9 +5,6 @@ Version: 1.0
 Author: ソサイチLABO管理人
 */
 
-/* Tailwind CSS - CDNまたはビルド済みファイルを使用 */
-@import url("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css");
-
 /* カスタムスタイル */
 .line-clamp-2 {
   display: -webkit-box;

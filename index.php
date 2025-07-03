@@ -7,14 +7,14 @@
 
         <div class="mx-auto max-w-6xl px-4 py-8">
             <!-- メインビジュアル -->
-            <section class="relative h-96 bg-gradient-to-r from-green-800 to-green-600 rounded-lg overflow-hidden mb-12">
-                <div class="absolute inset-0 bg-black/40"></div>
-                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('<?php echo get_template_directory_uri(); ?>/images/hero-bg.jpg');"></div>
-                <div class="relative z-10 flex h-full items-center justify-center text-center text-white">
+            <section class="relative h-96 rounded-lg overflow-hidden mb-12">
+                <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('<?php echo get_template_directory_uri(); ?>/images/main-visual.jpg');"></div>
+                <div class="absolute inset-0 bg-black/30 z-10"></div>
+                <div class="relative z-20 flex h-full items-center justify-center text-center text-white">
                     <div class="max-w-2xl px-4">
                         <h1 class="mb-4 text-4xl font-bold">ソサイチLABO</h1>
                         <p class="mb-6 text-lg">
-                            フットサルのすべてを網羅する情報源。戦術からトレーニングまで、あなたをカバーします。
+                            ソサイチって何？から戦術・トレーニングの深掘りまで、すべてをわかりやすく解説します。
                         </p>
                         <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded">
                             記事一覧を見る
