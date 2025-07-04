@@ -65,7 +65,9 @@
                                             <?php if (has_post_thumbnail()) : ?>
                                                 <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
                                             <?php else : ?>
-                                                <div class="w-full h-full bg-gray-200"></div>
+                                                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                    <span class="text-gray-400">No Image</span>
+                                                </div>
                                             <?php endif; ?>
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -116,7 +118,9 @@
                                             <?php if (has_post_thumbnail()) : ?>
                                                 <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
                                             <?php else : ?>
-                                                <div class="w-full h-full bg-gray-200"></div>
+                                                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                    <span class="text-gray-400">No Image</span>
+                                                </div>
                                             <?php endif; ?>
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -160,7 +164,7 @@
                             <input type="search" name="s" placeholder="記事を検索..." 
                                    class="pr-12 bg-gray-50 border-gray-200 w-full px-3 py-2 border rounded-md"
                                    value="<?php echo get_search_query(); ?>">
-                            <button type="submit" class="absolute right-1 top-1/2 -translate-y-1/2 h-8 px-3 bg-blue-600 text-white rounded text-sm">
+                            <button type="submit" class="absolute right-1 inset-y-0 my-auto h-8 px-3 bg-blue-600 text-white rounded text-sm">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
