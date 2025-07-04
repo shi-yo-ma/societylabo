@@ -178,7 +178,7 @@
                     <h3 class="mb-4 text-lg font-semibold">人気の検索キーワード</h3>
                     <div class="flex flex-wrap justify-center gap-2">
                         <?php
-                        $popular_keywords = array('ピヴォ', 'フォーメーション', 'トレーニング', '戦術', '世界大会');
+                        $popular_keywords = array('ソサイチ とは', 'ソサイチ ルール', 'ソサイチ W杯', 'ソサイチ 戦術', 'ソサイチ 関東リーグ');
                         foreach ($popular_keywords as $keyword) :
                         ?>
                             <a href="<?php echo home_url('/?s=' . urlencode($keyword)); ?>" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm transition-colors">

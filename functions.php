@@ -156,11 +156,11 @@ function get_category_post_count($category_slug) {
 // カスタムカテゴリ設定
 function get_custom_categories() {
     return array(
-        'tactics' => array('name' => 'タクティクス', 'icon' => '🌿', 'color' => 'from-green-400 to-green-600'),
-        'training' => array('name' => 'トレーニング', 'icon' => '🌱', 'color' => 'from-teal-400 to-teal-600'),
-        'team-building' => array('name' => 'チームビルディング', 'icon' => '👥', 'color' => 'from-blue-400 to-blue-600'),
-        'equipment' => array('name' => '用具', 'icon' => '⚽', 'color' => 'from-orange-400 to-orange-600'),
-        'news' => array('name' => 'ニュース', 'icon' => '📰', 'color' => 'from-purple-400 to-purple-600'),
+        'society-basics' => array('name' => 'ソサイチ基礎', 'icon' => '⚽', 'color' => 'from-green-400 to-green-600'),
+        'individual-tactics' => array('name' => '個人戦術', 'icon' => '👤', 'color' => 'from-blue-400 to-blue-600'),
+        'team-tactics' => array('name' => 'チーム戦術', 'icon' => '👥', 'color' => 'from-orange-400 to-orange-600'),
+        'training' => array('name' => 'トレーニング', 'icon' => '🏋️‍♂️', 'color' => 'from-purple-400 to-purple-600'),
+        'news' => array('name' => 'ニュース', 'icon' => '📰', 'color' => 'from-teal-400 to-teal-600'),
     );
 }
 ?>
