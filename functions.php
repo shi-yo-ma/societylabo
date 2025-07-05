@@ -1,6 +1,6 @@
 <?php
 // テーマサポート
-function socyeti_theme_setup() {
+function society_theme_setup() {
     // 投稿サムネイル有効化
     add_theme_support('post-thumbnails');
     
@@ -19,13 +19,10 @@ function socyeti_theme_setup() {
     // タイトルタグサポート
     add_theme_support('title-tag');
 }
-add_action('after_setup_theme', 'socyeti_theme_setup');
+add_action('after_setup_theme', 'society_theme_setup');
 
 // スタイルとスクリプトの読み込み
-function socyeti_enqueue_scripts() {
-    // Tailwind CSS
-    wp_enqueue_style('tailwind-css', 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
-    
+function society_enqueue_scripts() {
     // テーマスタイル
     wp_enqueue_style('theme-style', get_stylesheet_uri());
     
@@ -41,7 +38,7 @@ function socyeti_enqueue_scripts() {
         'nonce' => wp_create_nonce('ajax_nonce')
     ));
 }
-add_action('wp_enqueue_scripts', 'socyeti_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'society_enqueue_scripts');
 
 // カスタムフィールド（閲覧数）
 function get_post_views($post_id) {
@@ -67,7 +64,7 @@ function track_post_views($post_id) {
 add_action('wp_head', 'track_post_views');
 
 // 人気記事取得
-function get_popular_posts($limit = 10) {
+function get_popular_posts($limit = 5) {
     $args = array(
         'post_type' => 'post',
         'posts_per_page' => $limit,

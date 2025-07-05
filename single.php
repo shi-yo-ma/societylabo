@@ -24,7 +24,7 @@
 
             <!-- メインコンテンツエリア -->
             <div class="lg:grid lg:grid-cols-3 lg:gap-8">
-                <!-- 記事コンテンツ（PC: 左側2/3、モバイル: 全幅） -->
+                <!-- 記事コンテンツ -->
                 <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                     <!-- 記事本文エリア -->
                     <div class="bg-white rounded-lg p-6 mb-8">
@@ -55,10 +55,7 @@
                         <div class="mb-8">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-wrap gap-2">
-                                    <?php
-                                    $categories = get_the_category();
-                                    foreach ($categories as $category) :
-                                    ?>
+                                    <?php foreach (get_the_category() as $category) : ?>
                                         <a href="<?php echo get_category_link($category->term_id); ?>" class="inline-block bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full text-sm">
                                             <?php echo $category->name; ?>
                                         </a>
@@ -83,17 +80,53 @@
                         </div>
                     </div>
 
-                    <!-- PC用関連記事 -->
-                    <?php
-                    $related_posts = get_related_posts(get_the_ID(), 5);
-                    if (!empty($related_posts)) :
-                    ?>
-                        <div class="hidden lg:block bg-white rounded-lg p-6 mb-8">
-                            <h3 class="text-lg font-semibold mb-4">関連記事</h3>
+                    <div class="space-y-8">
+                        <!-- 関連記事 -->
+                        <?php
+                        $related_posts = get_related_posts(get_the_ID(), 5);
+                        if (!empty($related_posts)) : ?>
+                            <div class="bg-white rounded-lg p-6">
+                                <h3 class="text-xl font-semibold mb-4">関連記事</h3>
+                                <div class="space-y-8">
+                                    <?php foreach ($related_posts as $post) : setup_postdata($post); ?>
+                                        <a href="<?php the_permalink(); ?>">
+                                            <div class="flex space-x-3 group cursor-pointer">
+                                                <div class="w-16 h-16 relative flex-shrink-0 overflow-hidden rounded-lg">
+                                                    <?php if (has_post_thumbnail()) : ?>
+                                                        <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
+                                                    <?php else : ?>
+                                                        <div class="w-full h-full bg-gray-200"></div>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <h4 class="font-medium line-clamp-2 text-sm group-hover:text-blue-600 mb-1">
+                                                        <?php the_title(); ?>
+                                                    </h4>
+                                                    <div class="text-xs text-gray-500"><?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    <?php endforeach; wp_reset_postdata(); ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- 人気記事 -->
+                        <div class="bg-white rounded-lg p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-semibold">人気記事</h3>
+                                <a href="<?php echo add_query_arg('sort', 'popular', get_permalink(get_option('page_for_posts'))); ?>"
+                                class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
+                                    人気記事一覧
+                                </a>
+                            </div>
                             <div class="space-y-8">
-                                <?php foreach ($related_posts as $post) : setup_postdata($post); ?>
+                                <?php
+                                $popular_posts = get_popular_posts(5); // ★5件のみ
+                                foreach ($popular_posts as $index => $post) : setup_postdata($post); ?>
                                     <a href="<?php the_permalink(); ?>">
                                         <div class="flex space-x-3 group cursor-pointer">
+                                            <div class="w-6 flex-shrink-0 text-sm text-gray-500 font-medium"><?php echo $index + 1; ?></div>
                                             <div class="w-16 h-16 relative flex-shrink-0 overflow-hidden rounded-lg">
                                                 <?php if (has_post_thumbnail()) : ?>
                                                     <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
@@ -102,37 +135,58 @@
                                                 <?php endif; ?>
                                             </div>
                                             <div class="flex-1 min-w-0">
-                                                <h4 class="font-medium line-clamp-2 text-sm group-hover:text-blue-600 mb-1">
+                                                <h4 class="font-medium line-clamp-2 text-sm group-hover:text-blue-600">
                                                     <?php the_title(); ?>
                                                 </h4>
-                                                <div class="text-xs text-gray-500"><?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧</div>
+                                                <div class="mt-1 text-xs text-gray-500">
+                                                    <?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
                                 <?php endforeach; wp_reset_postdata(); ?>
                             </div>
                         </div>
-                    <?php endif; ?>
+
+                        <!-- カテゴリ -->
+                        <div class="bg-white rounded-lg p-6">
+                            <h3 class="text-lg font-semibold mb-4">カテゴリ</h3>
+                            <div class="flex flex-wrap gap-2" id="category-filters">
+                                <?php
+                                $custom_categories = get_custom_categories();
+                                foreach ($custom_categories as $slug => $category) :
+                                    $cat_obj = get_category_by_slug($slug);
+                                    if ($cat_obj) :
+                                ?>
+                                    <button class="category-filter px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-50" data-category="<?php echo $slug; ?>">
+                                        <?php echo $category['name']; ?>
+                                    </button>
+                                <?php endif; endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- サイドバー（PC: 右側1/3） -->
-                <div class="lg:col-span-1 space-y-6">
-                    <!-- PC用人気記事 -->
-                    <div class="hidden lg:block bg-white rounded-lg p-6">
+                <!-- PC用サイドバー -->
+                <div class="hidden lg:block lg:col-span-1 space-y-6">
+                    <!-- 最新記事 -->
+                    <div class="bg-white rounded-lg p-6">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold">人気記事</h3>
-                            <a href="<?php echo add_query_arg('sort', 'popular', get_permalink(get_option('page_for_posts'))); ?>" class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
-                                人気記事一覧
+                            <h3 class="text-lg font-semibold">最新記事</h3>
+                            <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>"
+                            class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
+                                最新記事一覧
                             </a>
                         </div>
-                        <div class="space-y-8">
+                        <div class="space-y-6">
                             <?php
-                            $popular_posts = get_popular_posts(10);
-                            foreach ($popular_posts as $index => $post) : setup_postdata($post);
-                            ?>
+                            $recent_posts = get_posts([
+                                'numberposts' => 10,
+                                'post_status' => 'publish'
+                            ]);
+                            foreach ($recent_posts as $post) : setup_postdata($post); ?>
                                 <a href="<?php the_permalink(); ?>">
                                     <div class="flex space-x-3 group cursor-pointer">
-                                        <div class="w-6 flex-shrink-0 text-sm text-gray-500 font-medium"><?php echo $index + 1; ?></div>
                                         <div class="w-16 h-16 relative flex-shrink-0 overflow-hidden rounded-lg">
                                             <?php if (has_post_thumbnail()) : ?>
                                                 <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
@@ -145,214 +199,12 @@
                                                 <?php the_title(); ?>
                                             </h4>
                                             <div class="mt-1 text-xs text-gray-500">
-                                                <?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧
+                                                <?php echo get_the_date('Y.m.d'); ?>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             <?php endforeach; wp_reset_postdata(); ?>
-                        </div>
-                    </div>
-
-                    <!-- PC用カテゴリ -->
-                    <div class="hidden lg:block bg-white rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">カテゴリ</h3>
-                        <div class="space-y-2">
-                            <?php
-                            $custom_categories = get_custom_categories();
-                            foreach ($custom_categories as $slug => $category) :
-                                $cat_obj = get_category_by_slug($slug);
-                                if ($cat_obj) :
-                            ?>
-                                <a href="<?php echo get_category_link($cat_obj->term_id); ?>" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center block">
-                                    <span class="font-medium text-gray-700"><?php echo $category['name']; ?></span>
-                                    <span class="text-sm text-gray-500 bg-gray-200 px-2 py-1 rounded-full">
-                                        <?php echo $cat_obj->count; ?>
-                                    </span>
-                                </a>
-                            <?php endif; endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- モバイル・タブレット用セクション -->
-            <div class="lg:hidden space-y-8">
-                <!-- スマホ用縦並びレイアウト -->
-                <div class="md:hidden space-y-8">
-                    <!-- 関連記事 -->
-                    <?php if (!empty($related_posts)) : ?>
-                        <div class="bg-white rounded-lg p-6">
-                            <h3 class="text-xl font-semibold mb-6">関連記事</h3>
-                            <div class="space-y-8">
-                                <?php foreach ($related_posts as $post) : setup_postdata($post); ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                        <div class="flex space-x-3 group cursor-pointer">
-                                            <div class="w-20 h-20 relative flex-shrink-0 overflow-hidden rounded-lg">
-                                                <?php if (has_post_thumbnail()) : ?>
-                                                    <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
-                                                <?php else : ?>
-                                                    <div class="w-full h-full bg-gray-200"></div>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <h4 class="font-semibold line-clamp-2 text-sm mb-1 group-hover:text-blue-600">
-                                                    <?php the_title(); ?>
-                                                </h4>
-                                                <div class="text-xs text-gray-500"><?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                <?php endforeach; wp_reset_postdata(); ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
-                    <!-- 人気記事 -->
-                    <div class="bg-white rounded-lg p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-semibold">人気記事</h3>
-                            <a href="<?php echo add_query_arg('sort', 'popular', get_permalink(get_option('page_for_posts'))); ?>" class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
-                                人気記事一覧
-                            </a>
-                        </div>
-                        <div class="space-y-8">
-                            <?php
-                            $popular_posts = get_popular_posts(10);
-                            foreach ($popular_posts as $index => $post) : setup_postdata($post);
-                            ?>
-                                <a href="<?php the_permalink(); ?>">
-                                    <div class="flex space-x-3 group cursor-pointer">
-                                        <div class="w-6 flex-shrink-0 text-sm text-gray-500 font-medium"><?php echo $index + 1; ?></div>
-                                        <div class="w-20 h-20 relative flex-shrink-0 overflow-hidden rounded-lg">
-                                            <?php if (has_post_thumbnail()) : ?>
-                                                <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
-                                            <?php else : ?>
-                                                <div class="w-full h-full bg-gray-200"></div>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <h4 class="font-semibold line-clamp-2 text-sm mb-1 group-hover:text-blue-600">
-                                                <?php the_title(); ?>
-                                            </h4>
-                                            <div class="text-xs text-gray-500"><?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            <?php endforeach; wp_reset_postdata(); ?>
-                        </div>
-                    </div>
-
-                    <!-- カテゴリ -->
-                    <div class="bg-white rounded-lg p-6">
-                        <h3 class="text-xl font-semibold mb-6">カテゴリ</h3>
-                        <div class="space-y-3">
-                            <?php
-                            $custom_categories = get_custom_categories();
-                            foreach ($custom_categories as $slug => $category) :
-                                $cat_obj = get_category_by_slug($slug);
-                                if ($cat_obj) :
-                            ?>
-                                <a href="<?php echo get_category_link($cat_obj->term_id); ?>" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center block">
-                                    <span class="font-medium text-gray-700"><?php echo $category['name']; ?></span>
-                                    <span class="text-sm text-gray-500 bg-gray-200 px-3 py-1 rounded-full">
-                                        <?php echo $cat_obj->count; ?>
-                                    </span>
-                                </a>
-                            <?php endif; endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- タブレット用横並びレイアウト -->
-                <div class="hidden md:block lg:hidden">
-                    <div class="grid grid-cols-2 gap-8">
-                        <!-- 左側: 人気記事 -->
-                        <div class="bg-white rounded-lg p-6">
-                            <div class="flex justify-between items-center mb-6">
-                                <h3 class="text-xl font-semibold">人気記事</h3>
-                                <a href="<?php echo add_query_arg('sort', 'popular', get_permalink(get_option('page_for_posts'))); ?>" class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
-                                    人気記事一覧
-                                </a>
-                            </div>
-                            <div class="space-y-8">
-                                <?php
-                                $popular_posts = get_popular_posts(10);
-                                foreach ($popular_posts as $index => $post) : setup_postdata($post);
-                                ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                        <div class="flex space-x-3 group cursor-pointer">
-                                            <div class="w-6 flex-shrink-0 text-sm text-gray-500 font-medium"><?php echo $index + 1; ?></div>
-                                            <div class="w-20 h-20 relative flex-shrink-0 overflow-hidden rounded-lg">
-                                                <?php if (has_post_thumbnail()) : ?>
-                                                    <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
-                                                <?php else : ?>
-                                                    <div class="w-full h-full bg-gray-200"></div>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <h4 class="font-semibold line-clamp-2 text-sm mb-1 group-hover:text-blue-600">
-                                                    <?php the_title(); ?>
-                                                </h4>
-                                                <div class="text-xs text-gray-500"><?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                <?php endforeach; wp_reset_postdata(); ?>
-                            </div>
-                        </div>
-
-                        <!-- 右側: 関連記事とカテゴリ -->
-                        <div class="space-y-8">
-                            <!-- 関連記事 -->
-                            <?php if (!empty($related_posts)) : ?>
-                                <div class="bg-white rounded-lg p-6">
-                                    <h3 class="text-xl font-semibold mb-6">関連記事</h3>
-                                    <div class="space-y-8">
-                                        <?php foreach ($related_posts as $post) : setup_postdata($post); ?>
-                                            <a href="<?php the_permalink(); ?>">
-                                                <div class="flex space-x-3 group cursor-pointer">
-                                                    <div class="w-20 h-20 relative flex-shrink-0 overflow-hidden rounded-lg">
-                                                        <?php if (has_post_thumbnail()) : ?>
-                                                            <?php the_post_thumbnail('thumbnail', array('class' => 'w-full h-full object-cover')); ?>
-                                                        <?php else : ?>
-                                                            <div class="w-full h-full bg-gray-200"></div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <div class="flex-1 min-w-0">
-                                                        <h4 class="font-semibold line-clamp-2 text-sm mb-1 group-hover:text-blue-600">
-                                                            <?php the_title(); ?>
-                                                        </h4>
-                                                        <div class="text-xs text-gray-500">
-                                                            <?php echo number_format(get_post_views(get_the_ID())); ?> 回閲覧
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        <?php endforeach; wp_reset_postdata(); ?>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-
-                            <!-- カテゴリ -->
-                            <div class="bg-white rounded-lg p-6">
-                                <h3 class="text-xl font-semibold mb-6">カテゴリ</h3>
-                                <div class="space-y-3">
-                                    <?php
-                                    $custom_categories = get_custom_categories();
-                                    foreach ($custom_categories as $slug => $category) :
-                                        $cat_obj = get_category_by_slug($slug);
-                                        if ($cat_obj) :
-                                    ?>
-                                        <a href="<?php echo get_category_link($cat_obj->term_id); ?>" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center block">
-                                            <span class="font-medium text-gray-700"><?php echo $category['name']; ?></span>
-                                            <span class="text-sm text-gray-500 bg-gray-200 px-3 py-1 rounded-full">
-                                                <?php echo $cat_obj->count; ?>
-                                            </span>
-                                        </a>
-                                    <?php endif; endforeach; ?>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

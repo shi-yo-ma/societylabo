@@ -44,17 +44,15 @@
             </div>
 
             <!-- ページネーション -->
-            <?php if (have_posts()) : ?>
-                <div class="mt-12">
-                    <?php
-                    the_posts_pagination(array(
-                        'prev_text' => '前のページ',
-                        'next_text' => '次のページ',
-                        'class' => 'flex justify-center space-x-2'
-                    ));
-                    ?>
-                </div>
-            <?php endif; ?>
+            <div class="mt-12">
+                <?php
+                the_posts_pagination(array(
+                    'prev_text' => '前のページ',
+                    'next_text' => '次のページ',
+                    'class' => 'flex justify-center space-x-2'
+                ));
+                ?>
+            </div>
         </div>
     </div>
 </div>
