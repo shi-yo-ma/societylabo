@@ -32,7 +32,7 @@
                 <!-- デスクトップ用検索バー -->
                 <div class="hidden md:flex">
                     <form role="search" method="get" action="<?php echo home_url('/'); ?>" class="relative flex w-64">
-                        <input type="search" name="s" placeholder="記事を検索..." 
+                        <input type="search" id="search-input" name="s" placeholder="記事を検索..." 
                                class="pr-12 bg-gray-50 border-gray-200 w-full px-3 py-2 border rounded-md"
                                value="<?php echo get_search_query(); ?>">
                         <button type="submit" class="absolute right-1 inset-y-0 my-auto h-8 px-3 bg-blue-600 text-white rounded text-sm">
@@ -68,7 +68,7 @@
     <!-- スマホ用検索バー（トグル表示） -->
     <div id="mobile-search" class="md:hidden fixed left-0 right-0 z-40 bg-white border-b px-4 py-3 hidden">
         <form role="search" method="get" action="<?php echo home_url('/'); ?>" class="relative flex">
-            <input type="search" name="s" placeholder="検索" 
+            <input type="search" id="search-input" name="s" placeholder="検索" 
                    class="pr-12 bg-gray-50 border-gray-200 w-full px-3 py-2 border rounded-md"
                    value="<?php echo get_search_query(); ?>">
             <button type="submit" class="absolute right-1 inset-y-0 my-auto h-8 px-3 bg-blue-600 text-white rounded text-sm">

@@ -54,8 +54,8 @@ WordPressテーマへの変換が完了しました！
 ### **📁 ファイル構成**
 - **style.css**: テーマ情報とTailwind CSS
 - **functions.php**: WordPress機能とカスタム関数
-- **index.php**: ホームページ
-- **archive.php**: 記事一覧ページ  
+- **front-page.php**: ホームページ
+- **home.php**: 記事一覧ページ  
 - **single.php**: 記事詳細ページ
 - **search.php**: 検索結果ページ
 - **header.php/footer.php**: 共通部分

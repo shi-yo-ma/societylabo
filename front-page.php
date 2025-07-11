@@ -145,7 +145,7 @@
                             $cat_obj = get_category_by_slug($slug);
                             if ($cat_obj) :
                         ?>
-                            <a href="<?php echo get_category_link($cat_obj->term_id); ?>" class="text-center transition-transform hover:scale-105">
+                            <a href="<?php echo add_query_arg('category', $slug, get_permalink(get_option('page_for_posts'))); ?>" class="text-center transition-transform hover:scale-105">
                                 <div class="bg-gradient-to-br <?php echo $category['color']; ?> relative rounded-lg h-32 mb-3 overflow-hidden">
                                     <div class="absolute inset-0 flex items-center justify-center">
                                         <div class="text-4xl opacity-80"><?php echo $category['icon']; ?></div>

@@ -131,6 +131,7 @@ function ajax_search_posts() {
     $posts = get_posts($args);
     
     ob_start();
+    global $post;
     foreach ($posts as $post) {
         setup_postdata($post);
         include(get_template_directory() . '/template-parts/article-card.php');
@@ -138,7 +139,7 @@ function ajax_search_posts() {
     wp_reset_postdata();
     
     $html = ob_get_clean();
-    
+
     wp_send_json_success($html);
 }
 add_action('wp_ajax_search_posts', 'ajax_search_posts');

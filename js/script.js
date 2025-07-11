@@ -1,5 +1,4 @@
 const $ = jQuery // Declare the jQuery variable
-const ajax_object = window.ajax_object // Declare the ajax_object variable
 
 jQuery(document).ready(($) => {
   // Ajax検索とフィルタリング
@@ -25,6 +24,10 @@ jQuery(document).ready(($) => {
         if (response.success) {
           $("#articles-container").html(response.data)
           updateSearchInfo(searchTerm, category, sort)
+
+          // クエリパラメータを削除
+          // const cleanUrl = window.location.origin + window.location.pathname
+          // window.history.replaceState({}, '', cleanUrl)
         }
       },
       error: () => {
@@ -33,6 +36,20 @@ jQuery(document).ready(($) => {
         )
       },
     })
+  }
+
+  if (window.location.pathname === "/wordpress/blog/") {
+    const urlParams = new URLSearchParams(window.location.search)
+    const sortParam = urlParams.get("sort") || "newest"
+    const categoryParam = urlParams.get("category") || "all"
+
+    // セレクトボックスとカテゴリボタンの初期状態設定
+    $("#sort-select").val(sortParam)
+    $(".category-filter").removeClass("active bg-blue-600 text-white").addClass("border-gray-300")
+    $('.category-filter[data-category="' + categoryParam + '"]').addClass("active bg-blue-600 text-white").removeClass("border-gray-300")
+
+    // 初期表示のためにAjax実行
+    performSearch()
   }
 
   function updateSearchInfo(searchTerm, category, sort) {
