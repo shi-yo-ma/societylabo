@@ -32,7 +32,7 @@ jQuery(document).ready(($) => {
     })
   }
 
-  if (window.location.pathname === "/wordpress/blog/") {
+  if (window.location.pathname === "/wordpress/list/") {
     const sortParam = typeof window.initialSort !== 'undefined' ? window.initialSort : 'newest';
     const categoryParam = typeof window.initialCategory !== 'undefined' ? window.initialCategory : 'all';
 
