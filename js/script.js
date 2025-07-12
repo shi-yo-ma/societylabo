@@ -3,7 +3,6 @@ const $ = jQuery // Declare the jQuery variable
 jQuery(document).ready(($) => {
   // Ajax検索とフィルタリング
   function performSearch() {
-    var searchTerm = $("#search-input").val()
     var category = $(".category-filter.active").data("category") || "all"
     var sort = $("#sort-select").val() || "newest"
 
@@ -12,7 +11,6 @@ jQuery(document).ready(($) => {
       type: "POST",
       data: {
         action: "search_posts",
-        search_term: searchTerm,
         category: category,
         sort: sort,
         nonce: ajax_object.nonce,
@@ -23,11 +21,7 @@ jQuery(document).ready(($) => {
       success: (response) => {
         if (response.success) {
           $("#articles-container").html(response.data)
-          updateSearchInfo(searchTerm, category, sort)
-
-          // クエリパラメータを削除
-          // const cleanUrl = window.location.origin + window.location.pathname
-          // window.history.replaceState({}, '', cleanUrl)
+          updateSearchInfo(category, sort)
         }
       },
       error: () => {
@@ -39,9 +33,8 @@ jQuery(document).ready(($) => {
   }
 
   if (window.location.pathname === "/wordpress/blog/") {
-    const urlParams = new URLSearchParams(window.location.search)
-    const sortParam = urlParams.get("sort") || "newest"
-    const categoryParam = urlParams.get("category") || "all"
+    const sortParam = typeof window.initialSort !== 'undefined' ? window.initialSort : 'newest';
+    const categoryParam = typeof window.initialCategory !== 'undefined' ? window.initialCategory : 'all';
 
     // セレクトボックスとカテゴリボタンの初期状態設定
     $("#sort-select").val(sortParam)
@@ -52,11 +45,8 @@ jQuery(document).ready(($) => {
     performSearch()
   }
 
-  function updateSearchInfo(searchTerm, category, sort) {
+  function updateSearchInfo(category, sort) {
     var info = ""
-    if (searchTerm) {
-      info += "「" + searchTerm + "」の検索結果: "
-    }
     if (category !== "all") {
       var categoryName = $('.category-filter[data-category="' + category + '"]').text()
       info += "カテゴリ「" + categoryName + "」: "
@@ -77,21 +67,6 @@ jQuery(document).ready(($) => {
 
   // ソート変更
   $(document).on("change", "#sort-select", () => {
-    performSearch()
-  })
-
-  // 検索実行
-  $(document).on("keypress", "#search-input", (e) => {
-    if (e.which === 13) {
-      performSearch()
-    }
-  })
-
-  // 人気キーワードクリック
-  $(document).on("click", ".keyword-link", function (e) {
-    e.preventDefault()
-    var keyword = $(this).text()
-    $("#search-input").val(keyword)
     performSearch()
   })
 })

@@ -79,4 +79,9 @@
     </div>
 </div>
 
+<script>
+    window.initialSort = "<?php echo isset($_POST['sort']) ? esc_js($_POST['sort']) : 'newest'; ?>";
+    window.initialCategory = "<?php echo isset($_POST['category']) ? esc_js($_POST['category']) : 'all'; ?>";
+</script>
+
 <?php get_footer(); ?>

@@ -30,9 +30,12 @@
                 <section class="mb-16">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold">最新記事</h2>
-                        <a href="<?php echo add_query_arg('sort', 'newest', get_permalink(get_option('page_for_posts'))); ?>" class="inline-block border border-gray-300 px-4 py-2 rounded text-sm hover:bg-gray-50">
-                            最新記事一覧
-                        </a>
+                        <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display:inline;">
+                            <input type="hidden" name="sort" value="newest">
+                            <button type="submit" class="inline-block border border-gray-300 px-4 py-2 rounded text-sm hover:bg-gray-50 bg-white cursor-pointer">
+                                最新記事一覧
+                            </button>
+                        </form>
                     </div>
                     <div class="grid gap-6 md:grid-cols-3">
                         <?php
@@ -85,9 +88,12 @@
                 <section class="mb-16">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold">人気記事</h2>
-                        <a href="<?php echo add_query_arg('sort', 'popular', get_permalink(get_option('page_for_posts'))); ?>" class="inline-block border border-gray-300 px-4 py-2 rounded text-sm hover:bg-gray-50">
-                            人気記事一覧
-                        </a>
+                        <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display:inline;">
+                            <input type="hidden" name="sort" value="popular">
+                            <button type="submit" class="inline-block border border-gray-300 px-4 py-2 rounded text-sm hover:bg-gray-50 bg-white cursor-pointer">
+                                人気記事一覧
+                            </button>
+                        </form>
                     </div>
                     <div class="grid gap-6 md:grid-cols-3">
                         <?php
@@ -145,14 +151,17 @@
                             $cat_obj = get_category_by_slug($slug);
                             if ($cat_obj) :
                         ?>
-                            <a href="<?php echo add_query_arg('category', $slug, get_permalink(get_option('page_for_posts'))); ?>" class="text-center transition-transform hover:scale-105">
-                                <div class="bg-gradient-to-br <?php echo $category['color']; ?> relative rounded-lg h-32 mb-3 overflow-hidden">
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <div class="text-4xl opacity-80"><?php echo $category['icon']; ?></div>
+                            <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display:inline;">
+                                <input type="hidden" name="category" value="<?php echo esc_attr($slug); ?>">
+                                <button type="submit" class="text-center transition-transform hover:scale-105 cursor-pointer border-0 bg-transparent p-0 m-0 w-full text-left">
+                                    <div class="bg-gradient-to-br <?php echo esc_attr($category['color']); ?> relative rounded-lg h-32 mb-3 overflow-hidden">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="text-4xl opacity-80"><?php echo $category['icon']; ?></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="font-medium text-black text-sm text-left"><?php echo $category['name']; ?></div>
-                            </a>
+                                    <div class="font-medium text-black text-sm text-left"><?php echo $category['name']; ?></div>
+                                </button>
+                            </form>
                         <?php endif; endforeach; ?>
                     </div>
                 </section>
@@ -178,7 +187,7 @@
                     <h3 class="mb-4 text-lg font-semibold">人気の検索キーワード</h3>
                     <div class="flex flex-wrap justify-center gap-2">
                         <?php
-                        $popular_keywords = array('ソサイチ とは', 'ソサイチ ルール', 'ソサイチ W杯', 'ソサイチ 戦術', 'ソサイチ 関東リーグ');
+                        $popular_keywords = array('ソサイチ とは', 'ソサイチ ルール', 'ソサイチ 日本代表', 'ソサイチ 戦術', 'ソサイチ 関東リーグ');
                         foreach ($popular_keywords as $keyword) :
                         ?>
                             <a href="<?php echo home_url('/?s=' . urlencode($keyword)); ?>" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm transition-colors">
