@@ -18,7 +18,7 @@
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
-                    <span class="text-gray-900">ソサイチ</span>
+                    <span class="text-gray-900"><?php echo wp_trim_words(get_the_title(), 10, '...'); ?></span>
                 </div>
             </nav>
 
@@ -158,9 +158,12 @@
                                     $cat_obj = get_category_by_slug($slug);
                                     if ($cat_obj) :
                                 ?>
-                                    <button class="category-filter px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-50" data-category="<?php echo $slug; ?>">
-                                        <?php echo $category['name']; ?>
-                                    </button>
+                                    <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display: inline;">
+                                        <input type="hidden" name="category" value="<?php echo esc_attr($slug); ?>">
+                                        <button type="submit" class="px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-50 bg-white cursor-pointer">
+                                            <?php echo esc_html($category['name']); ?>
+                                        </button>
+                                    </form>
                                 <?php endif; endforeach; ?>
                             </div>
                         </div>
