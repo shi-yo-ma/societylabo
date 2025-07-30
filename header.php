@@ -13,7 +13,7 @@
     </script>
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> data-is-home="<?php echo is_home() ? 'true' : 'false'; ?>">
     <!-- 固定ヘッダー -->
     <header class="fixed top-0 left-0 right-0 z-50 border-b bg-white px-4 py-3">
         <div class="mx-auto flex max-w-6xl items-center justify-between">

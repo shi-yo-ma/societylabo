@@ -56,9 +56,12 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-wrap gap-2">
                                     <?php foreach (get_the_category() as $category) : ?>
-                                        <a href="<?php echo get_category_link($category->term_id); ?>" class="inline-block bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full text-sm">
-                                            <?php echo $category->name; ?>
-                                        </a>
+                                        <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display: inline;">
+                                            <input type="hidden" name="category" value="<?php echo esc_attr($category->slug); ?>">
+                                            <button type="submit" class="inline-block bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full text-sm">
+                                                <?php echo esc_html($category->name); ?>
+                                            </button>
+                                        </form>
                                     <?php endforeach; ?>
                                 </div>
                                 <button onclick="shareArticle()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center ml-4 flex-shrink-0">
@@ -73,10 +76,7 @@
                         <!-- 問い合わせフォーム -->
                         <div class="border-t border-gray-200 pt-6">
                             <h3 class="text-lg font-semibold mb-4">記事の感想やリクエストをお聞かせください</h3>
-                            <form id="contact-form" class="space-y-4">
-                                <textarea id="contact-message" placeholder="記事の感想や、今後書いてほしい記事のテーマなどをお気軽にお書きください..." rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md resize-none"></textarea>
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">送信</button>
-                            </form>
+                            <?php echo do_shortcode('[contact-form-7 id="65eeeb6" title="コンタクトフォーム"]'); ?>
                         </div>
                     </div>
 
@@ -115,10 +115,12 @@
                         <div class="bg-white rounded-lg p-6">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-xl font-semibold">人気記事</h3>
-                                <a href="<?php echo add_query_arg('sort', 'popular', get_permalink(get_option('page_for_posts'))); ?>"
-                                class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
-                                    人気記事一覧
-                                </a>
+                                <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display:inline;">
+                                    <input type="hidden" name="sort" value="popular">
+                                    <button type="submit" class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
+                                        人気記事一覧
+                                    </button>
+                                </form>
                             </div>
                             <div class="space-y-8">
                                 <?php
@@ -176,10 +178,12 @@
                     <div class="bg-white rounded-lg p-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold">最新記事</h3>
-                            <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>"
-                            class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
-                                最新記事一覧
-                            </a>
+                            <form action="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>" method="POST" style="display:inline;">
+                                <input type="hidden" name="sort" value="newest">
+                                <button type="submit" class="inline-block border border-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-50">
+                                    最新記事一覧
+                                </button>
+                            </form>
                         </div>
                         <div class="space-y-6">
                             <?php
